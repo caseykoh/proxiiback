@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const pool = require("./database");
+const appointmentsRouter = require("./routes/appointments.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -12,41 +13,46 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: `http://localhost:${process.env.PORT}` }));
 
+const db = require("./models");
+db.sequelize.sync();
+
 app.get("/", (req, res) => {
   console.log("hello test empty");
   res.send(process.env.TEST);
 });
 
-app.post("/appointments", (req, res) => {
-  const {
-    tattoo_type,
-    image_references,
-    size,
-    placement,
-    description,
-    full_name,
-    email,
-    instagram_handle,
-  } = req.body;
-  console.log("Tattoo type: " + tattoo_type);
-  console.log("Full name: " + full_name);
-  console.log("Email: " + email);
+app.use("/appointments", appointmentsRouter);
 
-  const insertStatement =
-    "INSERT INTO appointments (tattoo_type, image_references, size, placement, description, full_name, email, instagram_handle, time_submitted) VALUES ($1, $2) RETURNING *";
+// app.post("/appointments", (req, res) => {
+//   const {
+//     tattoo_type,
+//     image_references,
+//     size,
+//     placement,
+//     description,
+//     full_name,
+//     email,
+//     instagram_handle,
+//   } = req.body;
+//   console.log("Tattoo type: " + tattoo_type);
+//   console.log("Full name: " + full_name);
+//   console.log("Email: " + email);
 
-  pool.query(insertStatement, [
-    tattoo_type,
-    image_references,
-    size,
-    placement,
-    description,
-    full_name,
-    email,
-    instagram_handle,
-  ]);
-  res.send("Response received: " + req.body);
-});
+//   const insertStatement =
+//     "INSERT INTO appointments (tattoo_type, image_references, size, placement, description, full_name, email, instagram_handle, time_submitted) VALUES ($1, $2) RETURNING *";
+
+//   pool.query(insertStatement, [
+//     tattoo_type,
+//     image_references,
+//     size,
+//     placement,
+//     description,
+//     full_name,
+//     email,
+//     instagram_handle,
+//   ]);
+//   res.send("Response received: " + req.body);
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
