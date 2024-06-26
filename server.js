@@ -23,37 +23,6 @@ app.get("/", (req, res) => {
 
 app.use("/appointments", appointmentsRouter);
 
-// app.post("/appointments", (req, res) => {
-//   const {
-//     tattoo_type,
-//     image_references,
-//     size,
-//     placement,
-//     description,
-//     full_name,
-//     email,
-//     instagram_handle,
-//   } = req.body;
-//   console.log("Tattoo type: " + tattoo_type);
-//   console.log("Full name: " + full_name);
-//   console.log("Email: " + email);
-
-//   const insertStatement =
-//     "INSERT INTO appointments (tattoo_type, image_references, size, placement, description, full_name, email, instagram_handle, time_submitted) VALUES ($1, $2) RETURNING *";
-
-//   pool.query(insertStatement, [
-//     tattoo_type,
-//     image_references,
-//     size,
-//     placement,
-//     description,
-//     full_name,
-//     email,
-//     instagram_handle,
-//   ]);
-//   res.send("Response received: " + req.body);
-// });
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
