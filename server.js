@@ -28,14 +28,6 @@ app.post("/appointments", (req, res) => {
     email,
     instagram_handle,
   } = req.body;
-  // const tattoo_type = req.body["tattoo_type"];
-  // const image_references = req.body["image_references"];
-  // const size = req.body["size"];
-  // const placement = req.body["placement"];
-  // const description = req.body["description"];
-  // const full_name = req.body["full_name"];
-  // const email = req.body["email"];
-  // const instagram_handle = req.body["instagram_handle"];
   console.log("Tattoo type: " + tattoo_type);
   console.log("Full name: " + full_name);
   console.log("Email: " + email);
