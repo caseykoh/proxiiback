@@ -26,7 +26,87 @@ const create = async (req, res) => {
       });
     });
 };
-const findOne = async (req, res) => {};
+
+const findOne = async (req, res) => {
+  const id = req.params.id;
+
+  Appointments.findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Appointment with id=${id}`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Appointment with id=" + id,
+      });
+    });
+};
+
+const update = async (req, res) => {
+  const id = req.params.id;
+
+  Appointments.update(req.body, {
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "Appointment was updated successfully." });
+      } else {
+        res.send({
+          message: `Cannot update Appointment with id=${id}. Maybe Appointment was not found or req.body is empty.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Appointment with id=" + id,
+      });
+    });
+};
+
+const deleteAppointment = async (req, res) => {
+  const id = req.params.id;
+
+  Appointments.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "Appointment was deleted successfully." });
+      } else {
+        res.send({
+          message: `Cannot delete Appointment with id=${id}. Maybe Appointment was not found.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error deleting Appointment with id=" + id,
+      });
+    });
+};
+
+const deleteAll = async (req, res) => {
+  const id = req.params.id;
+
+  Appointments.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then((nums) => {
+      res.send({ message: `${nums} Appointments were deleted successfully.` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error while removing all appointments.",
+      });
+    });
+};
 
 const getAllAppointments = async (req, res) => {
   try {
@@ -39,5 +119,9 @@ const getAllAppointments = async (req, res) => {
 
 module.exports = {
   create,
+  findOne,
+  update,
+  deleteAppointment,
+  deleteAll,
   getAllAppointments,
 };
