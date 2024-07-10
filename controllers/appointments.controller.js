@@ -8,11 +8,28 @@ const create = async (req, res) => {
     return;
   }
 
+  const {
+    full_name,
+    email,
+    instagram,
+    design_type,
+    size,
+    placement,
+    description,
+    createdAt,
+    updatedAt,
+  } = req.body;
+
   const appointment = {
-    full_name: req.body.full_name,
-    email: req.body.email,
-    createdAt: req.body.createdAt || new Date(),
-    updatedAt: req.body.updatedAt || new Date(),
+    full_name,
+    email,
+    instagram,
+    design_type,
+    size,
+    placement,
+    description,
+    createdAt: createdAt || new Date(),
+    updatedAt: updatedAt || new Date(),
   };
 
   Appointments.create(appointment)
