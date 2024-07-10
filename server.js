@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const pool = require("./database");
 const appointmentsRouter = require("./routes/appointments.routes");
+const imageUrlsRouter = require("./routes/imageurls.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/appointments", appointmentsRouter);
+app.use("/imageurls", imageUrlsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
