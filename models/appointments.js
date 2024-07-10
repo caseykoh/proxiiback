@@ -13,8 +13,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Appointments.init(
     {
-      full_name: DataTypes.STRING,
-      email: DataTypes.STRING,
+      full_name: { type: DataTypes.STRING, allowNull: false },
+      email: { type: DataTypes.STRING, allowNull: false },
+      instagram: { type: DataTypes.STRING, allowNull: true },
+      design_type: { type: DataTypes.STRING, allowNull: false },
+      size: { type: DataTypes.STRING, allowNull: false },
+      placement: { type: DataTypes.STRING, allowNull: false },
+      description: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
