@@ -1,4 +1,9 @@
 const { Appointments } = require("../models");
+const { ImageUrl } = require("../models");
+
+const appointmentOptions = {
+  include: [ImageUrl],
+};
 
 const create = async (req, res) => {
   if (!req.body.full_name) {
@@ -47,7 +52,7 @@ const create = async (req, res) => {
 const findOne = async (req, res) => {
   const id = req.params.id;
 
-  Appointments.findByPk(id)
+  Appointments.findByPk(id, appointmentOptions)
     .then((data) => {
       if (data) {
         res.send(data);

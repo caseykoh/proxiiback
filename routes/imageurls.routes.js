@@ -1,7 +1,15 @@
 const { Router } = require("express");
 const router = Router();
-const { show } = require("../controllers/imageurls.controller");
+const {
+  findOne,
+  getAllImageUrls,
+  deleteImageUrl,
+  deleteAll,
+} = require("../controllers/imageurls.controller");
 
-router.get("/:id", show);
+router.get("/", getAllImageUrls);
+router.get("/:id", findOne);
+router.delete("/:id", deleteImageUrl);
+router.delete("/", deleteAll);
 
 module.exports = router;

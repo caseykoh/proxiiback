@@ -8,15 +8,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      ImageUrl.belongsTo(models.Appointments, {
-        foreignKey: "appointmentId",
-        onDelete: "cascade",
-      });
+      ImageUrl.belongsTo(models.Appointments);
     }
   }
   ImageUrl.init(
     {
-      url: DataTypes.TEXT,
+      url: { type: DataTypes.TEXT, allowNull: false },
     },
     {
       sequelize,

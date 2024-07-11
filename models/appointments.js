@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Appointments.hasMany(models.ImageUrl, {
-        foreignKey: "appointmentId",
-        as: "appointments",
+        onDelete: "cascade",
       });
     }
   }

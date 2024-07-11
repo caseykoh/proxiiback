@@ -8,13 +8,13 @@ module.exports = {
     return await queryInterface.bulkInsert("ImageUrls", [
       {
         url: "link.com",
-        appointmentId: 1,
+        AppointmentId: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         url: "link.com/second",
-        appointmentId: 1,
+        AppointmentId: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

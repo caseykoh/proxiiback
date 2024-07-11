@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       url: {
+        allowNull: false,
         type: Sequelize.TEXT,
       },
       createdAt: {
@@ -20,8 +21,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      appointmentId: {
+      AppointmentId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
         references: {
           model: "Appointments",
           key: "id",
