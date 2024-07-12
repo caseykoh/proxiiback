@@ -3,7 +3,6 @@ require("dotenv").config({ path: path.resolve(__dirname, "/.env") });
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const pool = require("./database");
 const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
 
@@ -12,7 +11,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: `http://localhost:${process.env.PORT}` }));
+app.use(cors());
 
 const db = require("./models");
 db.sequelize.sync();

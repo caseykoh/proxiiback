@@ -23,9 +23,10 @@ const create = async (req, res) => {
     description,
     createdAt,
     updatedAt,
+    urls,
   } = req.body;
 
-  const appointment = {
+  const appointmentFields = {
     full_name,
     email,
     instagram,
@@ -37,16 +38,29 @@ const create = async (req, res) => {
     updatedAt: updatedAt || new Date(),
   };
 
-  Appointments.create(appointment)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Appointment.",
-      });
+  try {
+    const appointment = await Appointments.create(appointmentFields);
+    const imageUrlPromise = urls.map(
+      async (url) =>
+        await ImageUrl.create({
+          url,
+          AppointmentId: appointment.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+    );
+    await Promise.all(imageUrlPromise);
+
+    res.status(201).json({
+      appointment,
+      message: "Appointment created successfully",
     });
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message || "Some error occurred while adding an appointment.",
+    });
+  }
 };
 
 const findOne = async (req, res) => {
