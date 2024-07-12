@@ -1,5 +1,4 @@
-const { Appointments } = require("../models");
-const { ImageUrl } = require("../models");
+const { Appointments, ImageUrl, sequelize } = require("../models");
 
 const appointmentOptions = {
   include: [ImageUrl],
@@ -38,24 +37,34 @@ const create = async (req, res) => {
     updatedAt: updatedAt || new Date(),
   };
 
+  const t = await sequelize.transaction();
+
   try {
-    const appointment = await Appointments.create(appointmentFields);
+    const appointment = await Appointments.create(appointmentFields, {
+      transaction: t,
+    });
     const imageUrlPromise = urls.map(
       async (url) =>
-        await ImageUrl.create({
-          url,
-          AppointmentId: appointment.id,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
+        await ImageUrl.create(
+          {
+            url,
+            AppointmentId: appointment.id,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          {
+            transaction: t,
+          }
+        )
     );
     await Promise.all(imageUrlPromise);
-
+    await t.commit();
     res.status(201).json({
       appointment,
       message: "Appointment created successfully",
     });
   } catch (error) {
+    await t.rollback();
     res.status(500).send({
       message:
         error.message || "Some error occurred while adding an appointment.",
