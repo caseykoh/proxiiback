@@ -28,16 +28,16 @@ const deleteImageUrl = async (req, res) => {
   })
     .then((num) => {
       if (num == 1) {
-        res.send({ message: "Appointment was deleted successfully." });
+        res.send({ message: "ImageUrl was deleted successfully." });
       } else {
         res.send({
-          message: `Cannot delete Appointment with id=${id}. Maybe Appointment was not found.`,
+          message: `Cannot delete ImageUrl with id=${id}. Maybe ImageUrl was not found.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error deleting Appointment with id=" + id,
+        message: "Error deleting ImageUrl with id=" + id,
       });
     });
 };
