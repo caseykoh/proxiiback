@@ -1,29 +1,19 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
-const { DEV_DATABASE_HOST, DEV_DATABASE_USERNAME, DEV_DATABASE_PASSWORD } =
-  process.env;
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
 
 module.exports = {
-  development: {
-    username: DEV_DATABASE_USERNAME,
-    password: DEV_DATABASE_PASSWORD,
-    database: "proxiiworld_development",
-    host: DEV_DATABASE_HOST,
-    dialect: "postgres",
-  },
-  test: {
-    username: "root",
-    password: null,
-    database: "proxiitest-db",
-    host: "127.0.0.1",
-    dialect: "postgres",
-  },
-  production: {
-    username: "root",
-    password: null,
-    database: "proxiidb",
-    host: "127.0.0.1",
-    dialect: "postgres",
+  host: DB_HOST,
+  username: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  port: DB_PORT,
+  dialect: "postgres",
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
   },
 };

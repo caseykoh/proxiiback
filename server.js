@@ -14,7 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 const db = require("./models");
-db.sequelize.sync();
+db.sequelize
+  .sync()
+  .then((result) => {
+    console.log("Database connected");
+  })
+  .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
   console.log("hello test empty");
@@ -23,6 +28,13 @@ app.get("/", (req, res) => {
 
 app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
