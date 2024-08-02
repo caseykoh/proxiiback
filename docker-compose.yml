@@ -2,6 +2,7 @@ services:
   app:
     container_name: proxiiback
     image: scaseykoh/proxii_app
+    platform: linux/amd64
     depends_on:
       - db
     build: .
@@ -20,6 +21,7 @@ services:
   db:
     image: postgres
     restart: unless-stopped
+    platform: linux/amd64
     env_file: ./.env
     environment:
       - POSTGRES_USER=$POSTGRESDB_USER
