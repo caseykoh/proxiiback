@@ -1,5 +1,5 @@
 const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
 
