@@ -20,16 +20,29 @@ services:
     stdin_open: true
     tty: true
   nginx:
+    image: nginx:latest
     platform: linux/amd64
     restart: always
     build:
       context: ./nginx
     ports:
       - "80:80"
+      - 443:443
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
       - app
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    depends_on:
+      - nginx
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email proxiidream@gmail.com -d api.proxiiworld.com --agree-tos
   db:
     image: postgres
     restart: unless-stopped
