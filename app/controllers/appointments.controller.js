@@ -1,4 +1,14 @@
 const { Appointments, ImageUrl, sequelize } = require("../models");
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+const path = require("path");
+
+// Read the HTML file
+const templatePath = path.join(
+  __dirname,
+  "../emails/appointmentConfirmation.html"
+);
+let emailTemplate = fs.readFileSync(templatePath, "utf8");
 
 const appointmentOptions = {
   include: [ImageUrl],
@@ -59,6 +69,42 @@ const create = async (req, res) => {
     );
     await Promise.all(imageUrlPromise);
     await t.commit();
+
+    emailTemplate = emailTemplate
+      .replace(/\[full_name\]/g, appointment.full_name)
+      .replace(/\[email\]/g, appointment.email)
+      .replace(/\[instagram\]/g, appointment.instagram)
+      .replace(/\[tattoo_type\]/g, appointment.design_type)
+      .replace(/\[tattoo_placement\]/g, appointment.placement)
+      .replace(/\[tattoo_size\]/g, appointment.size)
+      .replace(/\[tattoo_description\]/g, appointment.description);
+
+    // setup nodemailer
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_APP_USER, // Your email
+        pass: process.env.EMAIL_APP_PASSWORD, // App-specific password
+      },
+    });
+
+    const mailOptions = {
+      from: "proxiidream@gmail.com",
+      to: ["proxiidream@gmail.com", appointment.email],
+      subject: "proxii_dream Tattoo Inquiry",
+      html: emailTemplate,
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error sending email:", error);
+        return res.status(500).send({ message: "Error sending email" });
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
     res.status(201).json({
       appointment,
       message: "Appointment created successfully",
