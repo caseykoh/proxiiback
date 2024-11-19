@@ -1,5 +1,5 @@
 const transporter = nodemailer.createTransport({
-  port: process.env.PORT || 4000, // true for 465, false for other ports
+  port: 465,
   host: "smtp.gmail.com",
   auth: {
     user: process.env.SENDER_EMAIL,
