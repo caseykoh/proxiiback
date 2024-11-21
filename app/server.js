@@ -10,10 +10,6 @@ const PORT = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-<<<<<<< HEAD
-app.use(cors());
-=======
->>>>>>> 84def8e (Fix url for cors headers)
 
 const db = require("./models");
 db.sequelize
