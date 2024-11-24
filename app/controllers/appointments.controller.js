@@ -70,7 +70,7 @@ const create = async (req, res) => {
     await Promise.all(imageUrlPromise);
     await t.commit();
 
-    emailTemplate = emailTemplate
+    const emailText = emailTemplate
       .replace(/\[full_name\]/g, appointment.full_name)
       .replace(/\[email\]/g, appointment.email)
       .replace(/\[instagram\]/g, appointment.instagram)
@@ -94,7 +94,7 @@ const create = async (req, res) => {
       from: "proxiidream@gmail.com",
       to: ["proxiidream@gmail.com", appointment.email],
       subject: "proxii_dream Tattoo Inquiry",
-      html: emailTemplate,
+      html: emailText,
     };
 
     // Send email
