@@ -14,6 +14,17 @@ const appointmentOptions = {
   include: [ImageUrl],
 };
 
+// setup nodemailer
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_APP_USER, // Your email
+    pass: process.env.EMAIL_APP_PASSWORD, // App-specific password
+  },
+});
+
 const create = async (req, res) => {
   if (!req.body.full_name) {
     res.status(400).send({
@@ -79,22 +90,20 @@ const create = async (req, res) => {
       .replace(/\[tattoo_size\]/g, appointment.size)
       .replace(/\[tattoo_description\]/g, appointment.description);
 
-    // setup nodemailer
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_APP_USER, // Your email
-        pass: process.env.EMAIL_APP_PASSWORD, // App-specific password
-      },
+    const attachments = urls.map((url, index) => {
+      const poppedName = url.split("/").pop();
+      return {
+        filename: poppedName || `file${index}`,
+        path: url,
+      };
     });
 
     const mailOptions = {
       from: "proxiidream@gmail.com",
       to: ["proxiidream@gmail.com", appointment.email],
-      subject: "proxii_dream Tattoo Inquiry",
+      subject: "Proxii Dream Tattoo Request Received",
       html: emailText,
+      attachments,
     };
 
     // Send email
