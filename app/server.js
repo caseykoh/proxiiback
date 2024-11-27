@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
+const adminRouter = require("./routes/admin.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
+app.use("/admin", adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
