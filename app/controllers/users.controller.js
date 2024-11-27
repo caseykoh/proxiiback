@@ -8,7 +8,7 @@ const create = async (req, res) => {
     return;
   }
 
-  const { username, password, role } = req.body;
+  const { username, password, role, createdAt, updatedAt } = req.body;
 
   const userFields = {
     username,
