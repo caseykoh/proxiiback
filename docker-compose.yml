@@ -3,6 +3,9 @@ services:
     container_name: proxiiback
     image: scaseykoh/proxii_app
     platform: linux/amd64
+    volumes:
+      - ./app:/usr/src/app
+    command: npm run dev
     depends_on:
       - db
     build:
@@ -22,12 +25,12 @@ services:
   nginx:
     image: nginx:latest
     platform: linux/amd64
-    restart: always
+    restart: unless-stopped
     build:
       context: ./nginx
     ports:
       - "80:80"
-      - 443:443
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
