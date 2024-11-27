@@ -19,6 +19,14 @@ db.sequelize
   })
   .catch((err) => console.log(err));
 
+app.use((req, res, next) => {
+  const token = req.headers["x-api-key"];
+  if (token !== process.env.API_KEY) {
+    return res.status(403).json({ message: "Forbidden: Invalid API Key" });
+  }
+  next();
+});
+
 app.get("/", (req, res) => {
   console.log("hello test empty");
   res.send(process.env.TEST);
