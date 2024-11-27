@@ -11,9 +11,30 @@ module.exports = {
       },
       full_name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      instagram: {
+        type: Sequelize.STRING,
+      },
+      design_type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      size: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      placement: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
