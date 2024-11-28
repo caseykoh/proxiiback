@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
 const usersRouter = require("./routes/users.routes");
+const authRouter = require("./routes/auth.routes");
 const cors = require("cors");
 
 const app = express();
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
 app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
