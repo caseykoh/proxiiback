@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const { Users } = require("../models");
 
 const create = async (req, res) => {
@@ -10,15 +11,17 @@ const create = async (req, res) => {
 
   const { username, password, role, createdAt, updatedAt } = req.body;
 
-  const userFields = {
-    username,
-    password,
-    role,
-    createdAt: createdAt || new Date(),
-    updatedAt: updatedAt || new Date(),
-  };
-
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userFields = {
+      username,
+      password: hashedPassword,
+      role,
+      createdAt: createdAt || new Date(),
+      updatedAt: updatedAt || new Date(),
+    };
+
     const user = await Users.create(userFields);
 
     res.status(201).json({
