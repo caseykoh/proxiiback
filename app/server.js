@@ -6,6 +6,11 @@ const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
 const usersRouter = require("./routes/users.routes");
 const authRouter = require("./routes/auth.routes");
+const {
+  authenticateJWT,
+  authorizeAdmin,
+} = require("./controllers/admin.controller");
+const adminRouter = require("./routes/admin.routes");
 const cors = require("cors");
 
 const app = express();
@@ -40,6 +45,7 @@ app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
