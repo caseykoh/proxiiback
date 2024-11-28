@@ -4,6 +4,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
+const usersRouter = require("./routes/users.routes");
+const authRouter = require("./routes/auth.routes");
+const {
+  authenticateJWT,
+  authorizeAdmin,
+} = require("./controllers/admin.controller");
+const adminRouter = require("./routes/admin.routes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -34,6 +41,9 @@ app.get("/", (req, res) => {
 
 app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
+app.use("/users", usersRouter);
+app.use("/auth", authRouter);
+app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
