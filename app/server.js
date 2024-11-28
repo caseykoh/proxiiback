@@ -41,7 +41,7 @@ app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
-app.use("/admin", adminRouter);
+app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);
