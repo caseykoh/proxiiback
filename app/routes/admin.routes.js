@@ -9,11 +9,11 @@ const {
   deleteAll,
 } = require("../controllers/admin.controller");
 
-router.post("/", create);
-router.get("/", getAllAppointments);
-router.get("/:id", findOne);
-router.put("/:id", update);
-router.delete("/:id", deleteAppointment);
-router.delete("/", deleteAll);
+router.post("/appointments/", create);
+router.get("/appointments/", getAllAppointments);
+router.get("/appointments/:id", findOne);
+router.put("/appointments/:id", update);
+router.delete("/appointments/:id", deleteAppointment);
+router.delete("/appointments/", deleteAll);
 
 module.exports = router;
