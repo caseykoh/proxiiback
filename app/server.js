@@ -6,6 +6,10 @@ const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
 const usersRouter = require("./routes/users.routes");
 const authRouter = require("./routes/auth.routes");
+const {
+  authenticateJWT,
+  authorizeAdmin,
+} = require("./controllers/admin.controller");
 const adminRouter = require("./routes/admin.routes");
 const cors = require("cors");
 
