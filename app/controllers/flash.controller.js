@@ -22,8 +22,8 @@ const findOne = async (req, res) => {
 
 const getAllFlash = async (req, res) => {
   try {
-    const users = await Flash.findAll({});
-    return res.status(200).json({ users });
+    const flash = await Flash.findAll({});
+    return res.status(200).json({ flash });
   } catch (error) {
     return res.status(500).send(error.message);
   }
