@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       mainImageUrl: { type: DataTypes.STRING, allowNull: false },
       extraImageUrls: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
