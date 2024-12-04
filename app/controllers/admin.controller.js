@@ -185,6 +185,92 @@ const getAllAppointments = async (req, res) => {
   }
 };
 
+const createFlash = async (req, res) => {
+  if (!req.body.mainImg) {
+    res.status(400).send({
+      message: "Content can not be empty",
+    });
+    return;
+  }
+
+  const {
+    price,
+    dimensions,
+    mainImg,
+    extraImg,
+    is_active,
+    createdAt,
+    updatedAt,
+  } = req.body;
+
+  try {
+    const flashDetails = {
+      price,
+      dimensions,
+      mainImg,
+      extraImg,
+      is_active,
+      createdAt: createdAt || new Date(),
+      updatedAt: updatedAt || new Date(),
+    };
+
+    const flash = await Flash.create(flashDetails);
+
+    res.status(201).json({
+      flash,
+      message: "Flash created successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Some error occurred while adding a flash.",
+    });
+  }
+};
+
+const updateFlash = async (req, res) => {
+  const id = req.params.id;
+
+  Flash.update(req.body, {
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "Flash was updated successfully." });
+      } else {
+        res.send({
+          message: `Cannot update Flash with id=${id}. Maybe Flash was not found or req.body is empty.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Flash with id=" + id,
+      });
+    });
+};
+
+const deleteFlash = async (req, res) => {
+  const id = req.params.id;
+
+  Flash.destroy({
+    where: { id: id },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({ message: "Flash was deleted successfully." });
+      } else {
+        res.send({
+          message: `Cannot delete Flash with id=${id}. Maybe Flash was not found.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error deleting Flash with id=" + id,
+      });
+    });
+};
+
 module.exports = {
   authenticateJWT,
   authorizeAdmin,
@@ -194,4 +280,7 @@ module.exports = {
   deleteAppointment,
   deleteAll,
   getAllAppointments,
+  createFlash,
+  updateFlash,
+  deleteFlash,
 };
