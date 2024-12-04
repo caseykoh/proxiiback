@@ -1,4 +1,4 @@
-const { Appointments, ImageUrl, sequelize } = require("../models");
+const { Appointments, ImageUrl, Flash, sequelize } = require("../models");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
@@ -186,7 +186,7 @@ const getAllAppointments = async (req, res) => {
 };
 
 const createFlash = async (req, res) => {
-  if (!req.body.mainImg) {
+  if (!req.body.mainImageUrl) {
     res.status(400).send({
       message: "Content can not be empty",
     });
@@ -196,8 +196,8 @@ const createFlash = async (req, res) => {
   const {
     price,
     dimensions,
-    mainImg,
-    extraImg,
+    mainImageUrl,
+    extraImageUrls,
     is_active,
     createdAt,
     updatedAt,
@@ -207,8 +207,8 @@ const createFlash = async (req, res) => {
     const flashDetails = {
       price,
       dimensions,
-      mainImg,
-      extraImg,
+      mainImageUrl,
+      extraImageUrls,
       is_active,
       createdAt: createdAt || new Date(),
       updatedAt: updatedAt || new Date(),
