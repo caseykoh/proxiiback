@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const appointmentsRouter = require("./routes/appointments.routes");
 const imageUrlsRouter = require("./routes/imageurls.routes");
 const usersRouter = require("./routes/users.routes");
+const flashRouter = require("./routes/flash.routes");
 const authRouter = require("./routes/auth.routes");
 const {
   authenticateJWT,
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
 app.use("/appointments", appointmentsRouter);
 app.use("/imageurls", imageUrlsRouter);
 app.use("/users", usersRouter);
+app.use("/flash", flashRouter);
 app.use("/auth", authRouter);
 app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
 
