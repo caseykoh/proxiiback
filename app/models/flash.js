@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Flash.init(
     {
+      title: { type: DataTypes.STRING },
       price: { type: DataTypes.STRING, allowNull: true },
       dimensions: { type: DataTypes.STRING, allowNull: true },
       isActive: {

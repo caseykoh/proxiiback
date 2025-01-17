@@ -3,12 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.addColumn("Flash", "title", Sequelize.STRING),
-    ]);
+    await queryInterface.addColumn("Flashes", "title", {
+      type: Sequelize.STRING,
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    return Promise.all([queryInterface.removeColumn("Flash", "title")]);
+    await queryInterface.removeColumn("Flashes", "title");
   },
 };

@@ -194,6 +194,7 @@ const createFlash = async (req, res) => {
   }
 
   const {
+    title,
     price,
     dimensions,
     mainImageUrl,
@@ -205,6 +206,7 @@ const createFlash = async (req, res) => {
 
   try {
     const flashDetails = {
+      title,
       price,
       dimensions,
       mainImageUrl,
